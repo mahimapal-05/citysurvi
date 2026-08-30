@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Affordability Planner & Relocation Decision System</title>
+  <meta name="description" content="Intelligent cost-of-living prediction, 5-factor financial stress scoring, and AI relocation decision system across India's top 10 tech and job cities with SurviveBro-style thermal receipt printer.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand-container">
+      <div class="brand-logo">🏙️</div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <h1 class="brand-title">City Affordability Planner</h1>
+          <span class="brand-badge">India Top 10</span>
+        </div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">AI Relocation & Cost Prediction System</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button id="exportReportBtn" class="header-btn" title="Export PDF / Print View">
+        <span>📄</span> Export Report
+      </button>
+      <button id="themeToggleBtn" class="header-btn" title="Toggle Theme">
+        <span id="themeIcon">☀️</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs-bar">
+    <button class="nav-tab-btn active" data-tab="dashboard">
+      <span>🧾</span> Thermal Receipt & Dashboard
+    </button>
+    <button class="nav-tab-btn" data-tab="comparison">
+      <span>🏆</span> 10-City Comparison Matrix
+    </button>
+    <button class="nav-tab-btn" data-tab="simulator">
+      <span>🔄</span> "What-If?" Live Simulator
+    </button>
+    <button class="nav-tab-btn" data-tab="neighborhoods">
+      <span>🏙️</span> Locality & Tech Hubs
+    </button>
+    <button class="nav-tab-btn" data-tab="job-offer">
+      <span>💼</span> Job Offer Relocation Evaluator
+    </button>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- ========================================================
+         TAB 1: AFFORDABILITY DASHBOARD & THERMAL RECEIPT PRINTER
+         ======================================================== -->
+    <section id="tab-dashboard" class="tab-pane active">
+      <div class="dashboard-grid">
+
+        <!-- Left Column: Input Form & Presets -->
+        <div class="input-sidebar">
+          <div class="glass-card">
+            <!-- Scenario Presets -->
+            <div class="presets-container">
+              <div class="preset-title">⚡ Quick Scenarios</div>
+              <div class="presets-scroll">
+                <button type="button" class="preset-btn" data-scenario="bengaluru_fresher">Bengaluru ₹45K</button>
+                <button type="button" class="preset-btn" data-scenario="mumbai_fintech">Mumbai ₹1.1L</button>
+                <button type="button" class="preset-btn" data-scenario="hyderabad_dev">Hyderabad ₹65K</button>
+                <button type="button" class="preset-btn" data-scenario="pune_shared">Pune ₹40K</button>
+                <button type="button" class="preset-btn" data-scenario="ahmedabad_gift">GIFT City ₹70K</button>
+              </div>
+            </div>
+
+            <form id="profileForm">
+              <!-- Monthly Net Income -->
+              <div class="form-group">
+                <label class="form-label" for="monthlyIncome">Monthly Net In-Hand Income (INR)</label>
+                <div class="input-with-icon">
+                  <span class="input-icon">₹</span>
+                  <input type="number" id="monthlyIncome" class="form-input" value="50000" min="5000" step="1000" required>
+                </div>
+              </div>
+
+              <!-- City Selection -->
+              <div class="form-group">
+                <label class="form-label" for="citySelect">Target Indian City</label>
+                <select id="citySelect" class="form-select">
+                  <option value="bengaluru" selected>Bengaluru (Silicon Valley)</option>
+                  <option value="mumbai">Mumbai (Financial Capital)</option>
+                  <option value="delhi">Delhi (NCR & Capital)</option>
+                  <option value="hyderabad">Hyderabad (HITEC City)</option>
+                  <option value="pune">Pune (Automobile & IT)</option>
+                  <option value="chennai">Chennai (OMR SaaS Hub)</option>
+                  <option value="gurugram">Gurugram (Cyber City)</option>
+                  <option value="noida">Noida (Expressway IT)</option>
+                  <option value="kolkata">Kolkata (City of Joy)</option>
+                  <option value="ahmedabad">Ahmedabad & GIFT City</option>
+                </select>
+              </div>
+
+              <!-- Living Arrangement -->
+              <div class="form-group">
+                <label class="form-label">Living Arrangement</label>
+                <div class="segmented-control">
+                  <label class="segment-label">
+                    <input type="radio" name="living_type" value="alone" checked>
+                    <div class="segment-tile">Alone</div>
+                  </label>
+                  <label class="segment-label">
+                    <input type="radio" name="living_type" value="with_roommate">
+                    <div class="segment-tile">Roommate</div>
+                  </label>
+                  <label class="segment-label">
+                    <input type="radio" name="living_type" value="with_family">
+                    <div class="segment-tile">Family</div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Accommodation / Rent Type -->
+              <div class="form-group">
+                <label class="form-label">Accommodation Type</label>
+                <div class="segmented-control">
+                  <label class="segment-label">
+                    <input type="radio" name="rent_type" value="pg">
+                    <div class="segment-tile">PG / Co-live</div>
+                  </label>
+                  <label class="segment-label">
+                    <input type="radio" name="rent_type" value="1bhk" checked>
+                    <div class="segment-tile">1 BHK</div>
+                  </label>
+                  <label class="segment-label">
+                    <input type="radio" name="rent_type" value="2bhk_shared">
+                    <div class="segment-tile">2BHK Shared</div>
+                  </label>
+                  <label class="segment-label">
+                    <input type="radio" name="rent_type" value="2bhk_private">
+                    <div class="segment-tile">2BHK Full</div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Lifestyle Tier -->
+              <div class="form-group">
+                <label class="form-label">Lifestyle Tier</label>
+                <div class="segmented-control">
+                  <label class="segment-label">
+                    <input type="radio" name="lifestyle" value="basic">
+                    <div class="segment-tile">Basic</div>
+                  </label>
+                  <label class="segment-label">
+                    <input type="radio" name="lifestyle" value="moderate" checked>
+                    <div class="segment-tile">Moderate</div>
+                  </label>
+                  <label class="segment-label">
+                    <input type="radio" name="lifestyle" value="premium">
+                    <div class="segment-tile">Premium</div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Desired Monthly Savings Target -->
+              <div class="form-group">
+                <label class="form-label" for="savingsTarget">Desired Monthly Savings Target (INR)</label>
+                <div class="input-with-icon">
+                  <span class="input-icon">₹</span>
+                  <input type="number" id="savingsTarget" class="form-input" value="10000" min="0" step="1000">
+                </div>
+              </div>
+
+              <!-- Spending Habit Sliders -->
+              <div class="form-group">
+                <label class="form-label">Spending & Lifestyle Intensity</label>
+                
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span>Dining Out & Delivery</span>
+                    <span id="eatingOutsideVal" class="slider-val">70%</span>
+                  </div>
+                  <input type="range" id="eatingOutside" min="0" max="100" value="70">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span>Shopping & Apparel</span>
+                    <span id="shoppingVal" class="slider-val">40%</span>
+                  </div>
+                  <input type="range" id="shopping" min="0" max="100" value="40">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span>Entertainment & Nightlife</span>
+                    <span id="entertainmentVal" class="slider-val">60%</span>
+                  </div>
+                  <input type="range" id="entertainment" min="0" max="100" value="60">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span>Travel & Weekend Trips</span>
+                    <span id="travelVal" class="slider-val">50%</span>
+                  </div>
+                  <input type="range" id="travel" min="0" max="100" value="50">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-header">
+                    <span>Subscriptions & OTT</span>
+                    <span id="subscriptionsVal" class="slider-val">30%</span>
+                  </div>
+                  <input type="range" id="subscriptions" min="0" max="100" value="30">
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary">
+                <span>🖨️</span> PRINT THE RECEIPT & CALCULATE
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Column: SurviveBro Thermal Receipt Printer & Analytics -->
+        <div class="results-column">
+
+          <!-- Top Stat Metrics Bar -->
+          <div class="metrics-banner-grid">
+            <div class="metric-stat-card">
+              <div class="msc-label">Net Monthly Savings</div>
+              <div id="statSavingsVal" class="msc-val text-green">₹13,000</div>
+              <div id="savingsTargetBadge" class="target-badge target-met">✓ Goal Met</div>
+            </div>
+
+            <div class="metric-stat-card">
+              <div class="msc-label">Savings Rate</div>
+              <div id="statSavingsRate" class="msc-val">26%</div>
+              <div class="msc-sub">Of monthly salary</div>
+            </div>
+
+            <div class="metric-stat-card">
+              <div class="msc-label">Total Monthly Outflow</div>
+              <div id="statExpenseVal" class="msc-val text-amber">₹37,000</div>
+              <div class="msc-sub"><span id="statExpenseRatio">74%</span> expense ratio</div>
+            </div>
+
+            <div class="metric-stat-card">
+              <div class="msc-label">1-Yr Projected Wealth</div>
+              <div id="statAnnualSavings" class="msc-val" style="color: var(--brand-primary);">₹1,56,000</div>
+              <div class="msc-sub">Min Req: <span id="statMinIncomeVal">₹47,000</span></div>
+            </div>
+          </div>
+
+          <!-- THE SURVIVEBRO THERMAL RECEIPT PRINTER WIDGET -->
+          <div class="printer-interactive-wrapper">
+            <div class="thermal-printer-machine" data-stage="complete">
+              <!-- Top Machine Controls: Screws & LED Screen -->
+              <div class="printer-top-panel">
+                <div class="printer-rivet"></div>
+                <div class="printer-led-screen">
+                  <span id="printerStatusIcon" class="printer-led-indicator">✓</span>
+                  <span id="printerStatusText">Verdict ready</span>
+                </div>
+                <div class="printer-rivet"></div>
+              </div>
+
+              <!-- Feeder Slot Opening -->
+              <div class="printer-slot-mouth"></div>
+            </div>
+
+            <!-- Printer Outflow Paper Area -->
+            <div class="printer-paper-container">
+              <div id="thermalPrinterPaper" class="receipt-paper is-printed">
+                <!-- Dynamically rendered receipt content -->
+              </div>
+            </div>
+
+            <!-- Action Controls below printer -->
+            <div class="printer-actions-bar">
+              <button id="triggerPrintBtn" type="button" class="btn-print-tactile">
+                <span>🖨️</span> RE-PRINT RECEIPT
+              </button>
+              <button id="tearReceiptBtn" type="button" class="btn-tear-receipt">
+                <span>✂️</span> Tear & Save PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Visuals: Speedometer Gauge + Expense Donut -->
+          <div class="results-visual-grid">
+            <!-- Financial Stress Speedometer -->
+            <div class="glass-card" style="margin-bottom: 0;">
+              <div class="card-header-row">
+                <h3 class="card-title">🧭 Financial Stress Index</h3>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">0 (Comfort) - 100 (Stress)</span>
+              </div>
+              <div id="stressGaugeContainer"></div>
+            </div>
+
+            <!-- Expense Breakdown Donut Chart -->
+            <div class="glass-card" style="margin-bottom: 0;">
+              <div class="card-header-row">
+                <h3 class="card-title">🍰 Monthly Expense Distribution</h3>
+              </div>
+              <div class="donut-container">
+                <canvas id="expenseDonutCanvas"></canvas>
+                <div id="expenseLegendContainer" class="expense-legend"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Safe AI Interpretation Layer Box -->
+          <div id="aiRecommendationContainer" class="ai-box" style="margin-top: 1.5rem;"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 2: 10-CITY COMPARISON MATRIX
+         ======================================================== -->
+    <section id="tab-comparison" class="tab-pane">
+      <div class="comparison-controls">
+        <div>
+          <h2>🏆 Top 10 Indian Job Cities Comparison</h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);">Calculated simultaneously for your take-home income and lifestyle setup.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Sort By:</span>
+          <select id="comparisonSortSelect" class="form-select" style="width: auto;">
+            <option value="stress_score" selected>Lowest Financial Stress</option>
+            <option value="net_savings">Highest Net Monthly Savings</option>
+            <option value="monthly_cost">Lowest Monthly Cost</option>
+            <option value="savings_rate">Highest Savings Rate %</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="comparisonContainer"></div>
+    </section>
+
+    <!-- ========================================================
+         TAB 3: "WHAT-IF?" REAL-TIME SIMULATOR
+         ======================================================== -->
+    <section id="tab-simulator" class="tab-pane">
+      <div class="simulator-layout">
+        <!-- Simulator Controls -->
+        <div class="glass-card">
+          <div class="card-header-row">
+            <h3 class="card-title">🔄 Adjust Variables</h3>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="presets-container">
+            <div class="preset-title">⚡ Quick Sim Shifts</div>
+            <div class="presets-scroll">
+              <button type="button" class="preset-btn sim-quick-btn" data-sim-action="hike_20k">+₹20K Salary Hike</button>
+              <button type="button" class="preset-btn sim-quick-btn" data-sim-action="roommate_switch">Switch to Roommate</button>
+              <button type="button" class="preset-btn sim-quick-btn" data-sim-action="cut_dining">Cut Dining to 25%</button>
+              <button type="button" class="preset-btn sim-quick-btn" data-sim-action="move_hyderabad">Relocate Hyderabad</button>
+              <button type="button" class="preset-btn sim-quick-btn" data-sim-action="move_kolkata">Relocate Kolkata</button>
+            </div>
+          </div>
+
+          <form id="simForm">
+            <div class="form-group">
+              <label class="form-label" for="simIncome">Simulated Monthly Salary (INR)</label>
+              <div class="input-with-icon">
+                <span class="input-icon">₹</span>
+                <input type="number" id="simIncome" class="form-input" value="70000" step="1000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="simCity">Simulated City</label>
+              <select id="simCity" class="form-select">
+                <option value="bengaluru" selected>Bengaluru</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="delhi">Delhi</option>
+                <option value="hyderabad">Hyderabad</option>
+                <option value="pune">Pune</option>
+                <option value="chennai">Chennai</option>
+                <option value="gurugram">Gurugram</option>
+                <option value="noida">Noida</option>
+                <option value="kolkata">Kolkata</option>
+                <option value="ahmedabad">Ahmedabad</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="simRentType">Simulated Housing Type</label>
+              <select id="simRentType" class="form-select">
+                <option value="pg">PG / Co-living</option>
+                <option value="1bhk">Private 1 BHK</option>
+                <option value="2bhk_shared" selected>Shared 2 BHK (with Flatmate)</option>
+                <option value="2bhk_private">Private 2 BHK</option>
+                <option value="3bhk_shared">Shared 3 BHK</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="simLifestyle">Simulated Lifestyle</label>
+              <select id="simLifestyle" class="form-select">
+                <option value="basic">Basic (Cost conscious)</option>
+                <option value="moderate" selected>Moderate (Standard comfortable)</option>
+                <option value="premium">Premium (High discretionary)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <div class="slider-header">
+                <span>Simulated Dining Out %</span>
+                <span id="simEatingOutVal" class="slider-val">40%</span>
+              </div>
+              <input type="range" id="simEatingOut" min="0" max="100" value="40">
+            </div>
+          </form>
+        </div>
+
+        <!-- Simulator Results -->
+        <div id="simResultsContainer"></div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 4: LOCALITY & TECH HUBS
+         ======================================================== -->
+    <section id="tab-neighborhoods" class="tab-pane">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <h2>🏙️ Locality & Tech Corridor Deep Dive</h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);">Find the ideal neighborhood balancing rent, safety, and commute distance to major IT parks.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Select City:</span>
+          <select id="neighborhoodCitySelect" class="form-select" style="width: auto;">
+            <option value="bengaluru" selected>Bengaluru</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="delhi">Delhi</option>
+            <option value="hyderabad">Hyderabad</option>
+            <option value="pune">Pune</option>
+            <option value="chennai">Chennai</option>
+            <option value="gurugram">Gurugram</option>
+            <option value="noida">Noida</option>
+            <option value="kolkata">Kolkata</option>
+            <option value="ahmedabad">Ahmedabad</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="neighborhoodsContainer"></div>
+    </section>
+
+    <!-- ========================================================
+         TAB 5: JOB OFFER RELOCATION EVALUATOR
+         ======================================================== -->
+    <section id="tab-job-offer" class="tab-pane">
+      <div class="job-offer-layout">
+        <!-- Job Offer Form -->
+        <div class="glass-card">
+          <div class="card-header-row">
+            <h3 class="card-title">💼 Job Offer Evaluator</h3>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            Got a new job offer in another city? Find out if your real purchasing power and net savings actually increase.
+          </p>
+
+          <!-- Quick Offer Presets -->
+          <div class="presets-container">
+            <div class="preset-title">⚡ Common Relocation Shifts</div>
+            <div class="presets-scroll">
+              <button type="button" class="preset-btn offer-preset-btn" data-offer-scenario="pune_to_blr">Pune (₹45K) → Bengaluru (₹65K)</button>
+              <button type="button" class="preset-btn offer-preset-btn" data-offer-scenario="kolkata_to_mumbai">Kolkata (₹50K) → Mumbai (₹85K)</button>
+              <button type="button" class="preset-btn offer-preset-btn" data-offer-scenario="delhi_to_hyd">Delhi (₹60K) → Hyderabad (₹75K)</button>
+            </div>
+          </div>
+
+          <form id="jobOfferForm">
+            <div style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem; margin-bottom: 1rem;">
+              <h4 style="font-size: 0.85rem; color: var(--brand-primary); margin-bottom: 0.6rem;">📍 Current Situation</h4>
+              
+              <div class="form-group">
+                <label class="form-label" for="currCity">Current City</label>
+                <select id="currCity" class="form-select">
+                  <option value="pune" selected>Pune</option>
+                  <option value="bengaluru">Bengaluru</option>
+                  <option value="mumbai">Mumbai</option>
+                  <option value="delhi">Delhi</option>
+                  <option value="hyderabad">Hyderabad</option>
+                  <option value="chennai">Chennai</option>
+                  <option value="gurugram">Gurugram</option>
+                  <option value="noida">Noida</option>
+                  <option value="kolkata">Kolkata</option>
+                  <option value="ahmedabad">Ahmedabad</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="currIncome">Current Monthly Salary (INR)</label>
+                <div class="input-with-icon">
+                  <span class="input-icon">₹</span>
+                  <input type="number" id="currIncome" class="form-input" value="45000" step="1000" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="currRentType">Current Housing</label>
+                <select id="currRentType" class="form-select">
+                  <option value="1bhk" selected>1 BHK</option>
+                  <option value="2bhk_shared">Shared 2BHK</option>
+                  <option value="pg">PG / Co-living</option>
+                  <option value="2bhk_private">Private 2BHK</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <h4 style="font-size: 0.85rem; color: var(--color-green); margin-bottom: 0.6rem;">🚀 New Job Offer</h4>
+
+              <div class="form-group">
+                <label class="form-label" for="offerCity">New Offer City</label>
+                <select id="offerCity" class="form-select">
+                  <option value="bengaluru" selected>Bengaluru</option>
+                  <option value="mumbai">Mumbai</option>
+                  <option value="delhi">Delhi</option>
+                  <option value="hyderabad">Hyderabad</option>
+                  <option value="pune">Pune</option>
+                  <option value="chennai">Chennai</option>
+                  <option value="gurugram">Gurugram</option>
+                  <option value="noida">Noida</option>
+                  <option value="kolkata">Kolkata</option>
+                  <option value="ahmedabad">Ahmedabad</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="offerIncome">Offered Monthly Salary (INR)</label>
+                <div class="input-with-icon">
+                  <span class="input-icon">₹</span>
+                  <input type="number" id="offerIncome" class="form-input" value="65000" step="1000" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="offerRentType">Planned Housing in New City</label>
+                <select id="offerRentType" class="form-select">
+                  <option value="1bhk" selected>1 BHK</option>
+                  <option value="2bhk_shared">Shared 2BHK</option>
+                  <option value="pg">PG / Co-living</option>
+                  <option value="2bhk_private">Private 2BHK</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="offerLifestyle">Lifestyle Tier</label>
+                <select id="offerLifestyle" class="form-select">
+                  <option value="basic">Basic</option>
+                  <option value="moderate" selected>Moderate</option>
+                  <option value="premium">Premium</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary">
+              <span>⚖️</span> Evaluate Relocation Viability
+            </button>
+          </form>
+        </div>
+
+        <!-- Job Offer Results Container -->
+        <div id="jobOfferResultsContainer"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Client Scripts -->
+  <script src="js/data/client_cities.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/components/gauge.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/components/receiptPrinter.js"></script>
+  <script src="js/components/calculator.js"></script>
+  <script src="js/components/comparison.js"></script>
+  <script src="js/components/simulator.js"></script>
+  <script src="js/components/neighborhoods.js"></script>
+  <script src="js/components/jobOffer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
