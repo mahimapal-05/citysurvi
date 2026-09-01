@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>City Affordability Planner & Relocation Decision System</title>
-  <meta name="description" content="Intelligent cost-of-living prediction, 5-factor financial stress scoring, and AI relocation decision system across India's top 10 tech and job cities with SurviveBro-style thermal receipt printer.">
+  <meta name="description" content="Intelligent cost-of-living prediction, 5-factor financial stress scoring, traffic commute tax trade-off, emergency survival runway, and thermal receipt generator across India's top 10 tech and job cities.">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -37,6 +37,12 @@
     <button class="nav-tab-btn active" data-tab="dashboard">
       <span>🧾</span> Thermal Receipt & Dashboard
     </button>
+    <button class="nav-tab-btn" data-tab="commute-tax">
+      <span>🚦</span> Traffic & Commute Tax
+    </button>
+    <button class="nav-tab-btn" data-tab="runway-clock">
+      <span>🛡️</span> Emergency Runway Clock
+    </button>
     <button class="nav-tab-btn" data-tab="comparison">
       <span>🏆</span> 10-City Comparison Matrix
     </button>
@@ -47,7 +53,7 @@
       <span>🏙️</span> Locality & Tech Hubs
     </button>
     <button class="nav-tab-btn" data-tab="job-offer">
-      <span>💼</span> Job Offer Relocation Evaluator
+      <span>💼</span> Job Offer Evaluator
     </button>
   </nav>
 
@@ -279,12 +285,18 @@
             </div>
 
             <!-- Action Controls below printer -->
-            <div class="printer-actions-bar">
+            <div class="printer-actions-bar" style="flex-wrap: wrap;">
               <button id="triggerPrintBtn" type="button" class="btn-print-tactile">
                 <span>🖨️</span> RE-PRINT RECEIPT
               </button>
+              <button id="shareStoryBtn" type="button" class="btn-share-tactile">
+                <span>📱</span> Instagram Story (9:16)
+              </button>
+              <button id="shareSquareBtn" type="button" class="btn-share-tactile">
+                <span>🖼️</span> Share Card (1:1)
+              </button>
               <button id="tearReceiptBtn" type="button" class="btn-tear-receipt">
-                <span>✂️</span> Tear & Save PDF
+                <span>✂️</span> PDF
               </button>
             </div>
           </div>
@@ -320,7 +332,124 @@
     </section>
 
     <!-- ========================================================
-         TAB 2: 10-CITY COMPARISON MATRIX
+         TAB 2: TRAFFIC & COMMUTE TAX CALCULATOR
+         ======================================================== -->
+    <section id="tab-commute-tax" class="tab-pane">
+      <div class="simulator-layout">
+        <div class="glass-card">
+          <div class="card-header-row">
+            <h3 class="card-title">🚦 Commute Trade-off Parameters</h3>
+          </div>
+
+          <!-- Tech Hub Quick Presets -->
+          <div class="presets-container">
+            <div class="preset-title">⚡ Tech Hub Presets</div>
+            <div class="presets-scroll">
+              <button type="button" class="preset-btn commute-preset-btn" data-hub="blr_orr">Bangalore ORR</button>
+              <button type="button" class="preset-btn commute-preset-btn" data-hub="hyd_hitec">Hyd HITEC City</button>
+              <button type="button" class="preset-btn commute-preset-btn" data-hub="mum_bkc">Mumbai BKC</button>
+              <button type="button" class="preset-btn commute-preset-btn" data-hub="pune_hinj">Pune Hinjawadi</button>
+              <button type="button" class="preset-btn commute-preset-btn" data-hub="ggn_cyber">Gurugram Cyber City</button>
+            </div>
+          </div>
+
+          <form id="commuteForm">
+            <div class="form-group">
+              <label class="form-label" for="commuteIncome">Monthly Take-Home Salary (INR)</label>
+              <div class="input-with-icon">
+                <span class="input-icon">₹</span>
+                <input type="number" id="commuteIncome" class="form-input" value="75000" step="1000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="commuteModeSelect">Daily Commute Mode</label>
+              <select id="commuteModeSelect" class="form-select">
+                <option value="cab" selected>Uber / Ola / Auto (₹22/km + Surge)</option>
+                <option value="car">Personal Car (Fuel + Maintenance ₹12/km)</option>
+                <option value="two_wheeler">Two-Wheeler / Bike (₹3.5/km)</option>
+                <option value="metro">Metro / Public Transit (₹2.5/km)</option>
+              </select>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.85rem; margin-top: 0.85rem;">
+              <h4 style="font-size: 0.85rem; color: var(--color-amber); margin-bottom: 0.5rem;">📍 Distant Suburb Flat</h4>
+              <div class="form-group">
+                <label class="form-label">Suburb Monthly Rent (INR)</label>
+                <input type="number" id="suburbRentInput" class="form-input" value="16000" step="500">
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div class="form-group">
+                  <label class="form-label">One-Way Dist (km)</label>
+                  <input type="number" id="suburbDistInput" class="form-input" value="18">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Traffic Time (mins)</label>
+                  <input type="number" id="suburbMinsInput" class="form-input" value="65">
+                </div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.85rem; margin-top: 0.85rem;">
+              <h4 style="font-size: 0.85rem; color: var(--color-green); margin-bottom: 0.5rem;">🏢 Core Corridor (Near Office)</h4>
+              <div class="form-group">
+                <label class="form-label">Core Area Rent (INR)</label>
+                <input type="number" id="coreRentInput" class="form-input" value="24000" step="500">
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div class="form-group">
+                  <label class="form-label">One-Way Dist (km)</label>
+                  <input type="number" id="coreDistInput" class="form-input" value="4">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Traffic Time (mins)</label>
+                  <input type="number" id="coreMinsInput" class="form-input" value="18">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div id="commuteTaxContainer"></div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 3: EMERGENCY RUNWAY & SURVIVAL CLOCK
+         ======================================================== -->
+    <section id="tab-runway-clock" class="tab-pane">
+      <div class="glass-card" style="margin-bottom: 1.5rem;">
+        <div class="card-header-row">
+          <div>
+            <h2 style="font-size: 1.35rem; color: var(--text-primary);">🛡️ Career Runway & Layoff Survival Clock</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">If you lose your income or take a career break, how many months can you survive across India's top 10 tech hubs?</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; margin-top: 1rem;">
+          <div style="flex: 1; min-width: 250px;">
+            <label class="form-label" for="runwaySavingsInput">Total Liquid Emergency Fund (INR)</label>
+            <div class="input-with-icon">
+              <span class="input-icon">₹</span>
+              <input type="number" id="runwaySavingsInput" class="form-input" value="300000" min="10000" step="10000">
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.6rem; padding-top: 1.4rem;">
+            <label class="switch" style="position: relative; display: inline-block; width: 44px; height: 24px;">
+              <input type="checkbox" id="runwayModeToggle" checked style="opacity: 0; width: 0; height: 0;">
+              <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--brand-primary); transition: .3s; border-radius: 24px;"></span>
+            </label>
+            <span id="runwayModeLabel" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);">🛡️ Lean Survival Mode (Rent + Basic Food + Power)</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="runwayClockContainer"></div>
+    </section>
+
+    <!-- ========================================================
+         TAB 4: 10-CITY COMPARISON MATRIX
          ======================================================== -->
     <section id="tab-comparison" class="tab-pane">
       <div class="comparison-controls">
@@ -344,7 +473,7 @@
     </section>
 
     <!-- ========================================================
-         TAB 3: "WHAT-IF?" REAL-TIME SIMULATOR
+         TAB 5: "WHAT-IF?" REAL-TIME SIMULATOR
          ======================================================== -->
     <section id="tab-simulator" class="tab-pane">
       <div class="simulator-layout">
@@ -427,7 +556,7 @@
     </section>
 
     <!-- ========================================================
-         TAB 4: LOCALITY & TECH HUBS
+         TAB 6: LOCALITY & TECH HUBS
          ======================================================== -->
     <section id="tab-neighborhoods" class="tab-pane">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
@@ -457,7 +586,7 @@
     </section>
 
     <!-- ========================================================
-         TAB 5: JOB OFFER RELOCATION EVALUATOR
+         TAB 7: JOB OFFER RELOCATION EVALUATOR
          ======================================================== -->
     <section id="tab-job-offer" class="tab-pane">
       <div class="job-offer-layout">
@@ -585,7 +714,10 @@
   <script src="js/state.js"></script>
   <script src="js/components/gauge.js"></script>
   <script src="js/charts.js"></script>
+  <script src="js/components/socialCard.js"></script>
   <script src="js/components/receiptPrinter.js"></script>
+  <script src="js/components/commuteTax.js"></script>
+  <script src="js/components/runwayClock.js"></script>
   <script src="js/components/calculator.js"></script>
   <script src="js/components/comparison.js"></script>
   <script src="js/components/simulator.js"></script>
