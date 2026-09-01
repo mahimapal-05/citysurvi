@@ -9,6 +9,7 @@ from app.routes.calculation import router as calculation_router
 from app.routes.simulation import router as simulation_router
 from app.routes.neighborhoods import router as neighborhoods_router
 from app.routes.job_offer import router as job_offer_router
+from app.routes.commute import router as commute_router
 
 app = FastAPI(
     title="City Affordability Planner & Relocation Decision Engine API",
@@ -31,6 +32,7 @@ app.include_router(calculation_router)
 app.include_router(simulation_router)
 app.include_router(neighborhoods_router)
 app.include_router(job_offer_router)
+app.include_router(commute_router)
 
 @app.get("/health", tags=["System"])
 @app.get("/api/health", tags=["System"])
