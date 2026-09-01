@@ -36,6 +36,28 @@ class ReceiptPrinterComponent {
         this.downloadOrPrintReceipt();
       });
     }
+
+    const shareStoryBtn = document.getElementById("shareStoryBtn");
+    if (shareStoryBtn) {
+      shareStoryBtn.addEventListener("click", () => {
+        if (!window.socialCardGenerator) {
+          window.socialCardGenerator = new window.SocialCardGenerator();
+        }
+        window.socialCardGenerator.currentFormat = "story";
+        window.socialCardGenerator.open();
+      });
+    }
+
+    const shareSquareBtn = document.getElementById("shareSquareBtn");
+    if (shareSquareBtn) {
+      shareSquareBtn.addEventListener("click", () => {
+        if (!window.socialCardGenerator) {
+          window.socialCardGenerator = new window.SocialCardGenerator();
+        }
+        window.socialCardGenerator.currentFormat = "square";
+        window.socialCardGenerator.open();
+      });
+    }
   }
 
   // Web Audio subtle mechanical ticking sound
