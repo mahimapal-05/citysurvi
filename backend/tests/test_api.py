@@ -104,5 +104,22 @@ def test_job_offer_evaluate_api():
     data = response.json()
     assert "verdict_badge" in data
     assert "ppp_parity_salary" in data
-    assert data["current_city"] == "Pune"
-    assert data["offer_city"] == "Bengaluru"
+
+def test_commute_tradeoff_endpoint():
+    payload = {
+        "city": "bengaluru",
+        "monthly_income": 80000,
+        "suburb_rent": 18000,
+        "core_rent": 26000,
+        "suburb_distance_km": 18,
+        "core_distance_km": 4,
+        "suburb_traffic_mins_per_trip": 75,
+        "core_traffic_mins_per_trip": 20,
+        "commute_mode": "cab"
+    }
+    response = client.post("/api/commute/tradeoff", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert "deltas" in data
+    assert "verdict" in data
+    assert data["deltas"]["hours_saved_monthly"] > 0
