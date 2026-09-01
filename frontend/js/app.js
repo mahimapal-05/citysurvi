@@ -10,14 +10,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   initTabs();
 
   // 3. Initialize Components
+  window.socialCardGenerator = new window.SocialCardGenerator();
   window.receiptPrinterComponent = new window.ReceiptPrinterComponent();
+  window.commuteTaxComponent = new window.CommuteTaxComponent();
+  window.runwayClockComponent = new window.RunwayClockComponent();
   window.calculatorComponent = new window.CalculatorComponent();
   window.comparisonComponent = new window.ComparisonComponent();
   window.simulatorComponent = new window.SimulatorComponent();
   window.neighborhoodComponent = new window.NeighborhoodComponent();
   window.jobOfferComponent = new window.JobOfferComponent();
 
-  // 4. Initialize Export / Share Modal
+  // 4. Initialize Export
   initExport();
 
   // 5. Initial Run with Bengaluru default
@@ -80,6 +83,10 @@ function initTabs() {
         window.neighborhoodComponent.loadCityNeighborhoods(currCity);
       } else if (targetTab === "job-offer") {
         window.jobOfferComponent.evaluate();
+      } else if (targetTab === "commute-tax") {
+        window.commuteTaxComponent.calculateTradeoff();
+      } else if (targetTab === "runway-clock") {
+        window.runwayClockComponent.calculateRunway();
       }
     });
   });
