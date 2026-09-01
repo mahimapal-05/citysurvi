@@ -30,24 +30,31 @@ class RunwayClockComponent {
 
   calculateRunway() {
     const savings = parseFloat(document.getElementById("runwaySavingsInput")?.value) || 300000;
-    const citiesData = window.CLIENT_CITIES_DATA || {};
+    const citiesData = window.CITIES_DATA || window.CLIENT_CITIES_DATA || {};
 
-    const results = Object.keys(citiesData).map(cityKey => {
+    const cityKeys = Object.keys(citiesData);
+    if (!cityKeys.length) return;
+
+    const results = cityKeys.map(cityKey => {
       const c = citiesData[cityKey];
-      // Basic 1BHK rent or shared 2BHK
-      const rent = c.rent_estimates["1bhk"] || 16000;
-      const food = this.isLeanSurvival ? (c.food_grocery_tier["basic"] || 6000) : (c.food_grocery_tier["moderate"] || 10000);
-      const bills = (c.utilities.electricity_water || 1800) + (c.utilities.wifi_broadband || 800);
-      const transport = this.isLeanSurvival ? 1200 : (c.transit.public_monthly_pass || 2500);
-      const lifestyle = this.isLeanSurvival ? 0 : 7000;
+      // Basic 1BHK rent
+      const rent = (c.rent && c.rent["1bhk"]) || (c.rent_estimates && c.rent_estimates["1bhk"]) || 16000;
+      const food = this.isLeanSurvival
+        ? ((c.food && c.food["basic"]) || 5200)
+        : ((c.food && c.food["moderate"]) || 8500);
+      const bills = (typeof c.utilities === "number" ? c.utilities : 2600) + (c.internet_phone || 999);
+      const transport = this.isLeanSurvival
+        ? ((c.transport && c.transport["basic"]) || 1200)
+        : ((c.transport && c.transport["moderate"]) || 3500);
+      const lifestyle = this.isLeanSurvival ? 0 : (c.discretionary_base || 5000);
 
       const monthlyBurn = rent + food + bills + transport + lifestyle;
       const runwayMonths = monthlyBurn > 0 ? (savings / monthlyBurn) : 0;
 
       return {
         key: cityKey,
-        name: c.name,
-        state: c.state,
+        name: c.name || cityKey.toUpperCase(),
+        state: c.state || "India",
         monthlyBurn: Math.round(monthlyBurn),
         runwayMonths: Math.round(runwayMonths * 10) / 10,
         rent: Math.round(rent),
@@ -61,7 +68,7 @@ class RunwayClockComponent {
   }
 
   render(savings, results) {
-    if (!this.container) return;
+    if (!this.container || !results.length) return;
 
     const longest = results[0];
     const shortest = results[results.length - 1];
