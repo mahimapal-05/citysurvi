@@ -213,3 +213,5 @@ window.CITIES_DATA = {
     ]
   }
 };
+
+window.CLIENT_CITIES_DATA = window.CITIES_DATA;
